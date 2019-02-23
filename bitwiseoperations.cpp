@@ -48,7 +48,20 @@ short parity_v1(unsigned long long x)
 }
 // the above code works by taking the bitwise AND which
 // in turn causes result to change each time we encounter
-// a 1 in the binary rep. of the number x. This operation is O(n)
+// a 1 in the binary rep. of the number x.
+//
+// result wont change unless x&1 is 1. 
+// This operation is O(n)
+
+short parity_v2(unsigned long long x)
+{
+  short result = 0;
+  while(x){
+    result ^=1;
+    x &= (x-1);
+  }
+  return result;
+}
 
 int main()
 {
@@ -64,4 +77,16 @@ int main()
   end = std::chrono::system_clock::now();                      
   elapsed_seconds = end-start;          
   std::cout << "bit_count_v2: " << elapsed_seconds.count() << "s\n";
+
+  start = std::chrono::system_clock::now();                         
+  parity_v1(99999999);                                           
+  end = std::chrono::system_clock::now();                           
+  elapsed_seconds = end-start;                                      
+  std::cout << "parity_v1:  " << elapsed_seconds.count() << "s\n";
+
+  start = std::chrono::system_clock::now();                       
+  parity_v2(99999999);                                            
+  end = std::chrono::system_clock::now();                           
+  elapsed_seconds = end-start;                                      
+  std::cout << "parity_v2:  " << elapsed_seconds.count() << "s\n";
 }
