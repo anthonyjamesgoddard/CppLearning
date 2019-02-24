@@ -21,10 +21,15 @@ int modPowerOf2(int x, int thePower)
 bool isPowerOf2(int x)
 {
   // true if there is only 1 bit set in binary rep
-  // unless that bit is the last bit
-  if(x&1) return false;
-  
-  return true;
+  return x && (! (x & (x-1)) );
+  // y = x & (x-1) removes the least significant bit.
+  // if x is a power of 2 then the result is 0.
+  // !y will be true in this case.
+  // since x >0 then true && true = true
+
+  // y will have the boolean value of true
+  // if it is greater than zero, which is the case
+  // if x is not a power of 2
 }
 
 int main()
