@@ -1,6 +1,10 @@
 #include<iostream>
 #include<chrono>
 #include<ctime>
+
+// for debugging
+#include<bitset>
+#include<string>
 // counts the bits equal to 1 in binary rep.
 short CountBits_v1(unsigned int x)
 {
@@ -57,11 +61,46 @@ short parity_v2(unsigned long long x)
 {
   short result = 0;
   while(x){
-    result ^=1;
-    x &= (x-1);
+    result ^=1; // result = result ^ 1
+    x &= (x-1); // removes the least significant 1
   }
   return result;
 }
+
+// again this is O(k) as the algorithm removes a 1 bit each time
+// and finishes when all 1 bits are gone.
+
+int kPreComputedParity[4] = {0, 1, 1, 0};
+
+short parity_v3(unsigned long long x)
+{
+  short result = 0;
+  const int kMaskSize = 2; // limited by 8 bit itegers
+  const int kBitMask  = 3; // gets the last two bits after shifting
+  return kPreComputedParity[x >> (3*kMaskSize)] ^
+    kPreComputedParity[(x >> (2*kMaskSize)) & kBitMask] ^
+    kPreComputedParity[(x >> kMaskSize) & kBitMask] ^
+    kPreComputedParity[x & kBitMask];
+}
+
+// this is okay but we have to store data
+// the time expense comes frm the shifting operation
+// That is, the cost is O(kMaskSize) = O(n/len(kPreComputedParity)).
+
+// the above algorithms have been O(n), or thereabouts
+// the below algorithm uses a halving method which reduces the
+// problem to O(log n) = log 64 = 5
+
+short parity_v4(unsigned long long x)
+{
+  x^= x >> 32;
+  x^= x >> 16;
+  x^= x >> 8;
+  x^= x >> 4;
+  x^= x >> 1;
+  return x & 0x1;  
+}
+
 
 int main()
 {
@@ -89,4 +128,10 @@ int main()
   end = std::chrono::system_clock::now();                           
   elapsed_seconds = end-start;                                      
   std::cout << "parity_v2:  " << elapsed_seconds.count() << "s\n";
+
+  start = std::chrono::system_clock::now();                       
+  parity_v4(99999999);                                            
+  end = std::chrono::system_clock::now();                         
+  elapsed_seconds = end-start;                                    
+  std::cout << "parity_v4:  " << elapsed_seconds.count() << "s\n";
 }
