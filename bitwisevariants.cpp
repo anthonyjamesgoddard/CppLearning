@@ -41,45 +41,44 @@ unsigned long long propRightmostOne(unsigned long long x)
 	return x;
 }
  
- int modPowerOf2(int x, int thePower)
- {                                                        
-	 // isolate the last thePower bits
-	 int mask = (1 << thePower) -1;
-	 return mask & x;
- }
- 
- bool isPowerOf2(int x)
- {
+int modPowerOf2(int x, int thePower)
+{                                                        
+	// isolate the last thePower bits
+	int mask = (1 << thePower) -1;
+	return mask & x;
+}
+
+bool isPowerOf2(int x)
+{
 	 // true if there is only 1 bit set in binary rep
-	 return x && (! (x & subtract(x,1)) );
-	 // y = x & (x-1) removes the least significant bit.
-	 // if x is a power of 2 then the result is 0.
+	return x && (! (x & subtract(x,1)) );
+	// y = x & (x-1) removes the least significant bit.
+	// if x is a power of 2 then the result is 0.
 	 // !y will be true in this case.
 	 // since x >0 then true && true = true
-
+	
 	 // y will have the boolean value of true
 	 // if it is greater than zero, which is the case
 	 // if x is not a power of 2
- }
- 
- int main()
- {
-	 int x = 23;
-	 std::string binary = std::bitset<32>(x).to_string(); //to binary
-	 std::cout<<binary<<"\n";
-	 x = modPowerOf2(x,2);
-	 binary = std::bitset<32>(x).to_string(); //to binary
-	 std::cout<<binary<<"\n";
+}
+
+
+unsigned long long swapbits(unsigned long long x, int i, int j)
+{
+	// we only want to swap bits when they are different
+	if(!((x & (1 << i)) & (x & (1 << j))))
+	{
+		unsigned long long mask = (1L << i) | (1L << j);
+		return x ^= mask; // XOR does the job
+	}
+	return x;
+}
+
+int main()
+{
+	int x = 23;
+	std::cout << std::bitset<32>(x).to_string() << std::endl;
+	std::cout << std::bitset<32>(swapbits(swapbits(x,1,3),1,3)).to_string() << std::endl;
 	 
-	 
-	 std::cout << "testing stub" << std::endl;
-	 int y = 99;
-	 binary = std::bitset<8>(y).to_string();
-	 std::cout << binary << std::endl;
-	 y=~y;
-	 binary = std::bitset<8>(y).to_string();
-	 std::cout << binary << std::endl;
-	 std::cout << add(13,4) << std::endl;
-     std::cout << subtract(13,4) << std::endl;	 
-	 return 0;
+	return 0;
 }
