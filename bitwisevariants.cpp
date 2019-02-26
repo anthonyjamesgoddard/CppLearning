@@ -63,22 +63,50 @@ bool isPowerOf2(int x)
 }
 
 
-unsigned long long swapbits(unsigned long long x, int i, int j)
+long long swapbits(long long x, int i, int j)
 {
 	// we only want to swap bits when they are different
-	if(!((x & (1 << i)) & (x & (1 << j))))
+	if(((x >> i) & 1) != (x >> j) & 1)
 	{
 		unsigned long long mask = (1L << i) | (1L << j);
-		return x ^= mask; // XOR does the job
+		x ^= mask; // XOR does the job
 	}
 	return x;
 }
 
+int findLocationOfMSB(long long x)
+{
+	int m = 0;
+	while(x)
+	{
+		m = add(m,1);
+		x >>= 1;
+	}
+	return m;
+}
+
+
+
+// we now reverse the bits. This can be done by caching. But
+// this is laborious to set up.
+
+
+// this is quite slow as we use  addition in finding the location
+long long reverseBits_v1(long long x)
+{
+	// we need to find the location of most significant bit
+	int m = findLocationOfMSB(x);
+	for(int i = 0;i < (m >> 1); i = add(i,1))
+		x = swapbits(x,i,(m-1)-i);
+	return x;
+}
+
+
 int main()
 {
-	int x = 23;
-	std::cout << std::bitset<32>(x).to_string() << std::endl;
-	std::cout << std::bitset<32>(swapbits(swapbits(x,1,3),1,3)).to_string() << std::endl;
-	 
+	long long x = 101;
+	std::cout << std::bitset<8>(x).to_string() << std::endl;
+	x = reverseBits_v1(x); 
+	std::cout << std::bitset<8>(x).to_string() << std::endl;
 	return 0;
 }
