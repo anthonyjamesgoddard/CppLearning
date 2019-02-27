@@ -31,6 +31,21 @@ unsigned long long add(unsigned long long x,
 	return x;
 }
 
+unsigned long long multiply(unsigned long long x,
+							unsigned long long y)
+{
+	auto result = 0;
+	while(x)
+	{
+		if(x & 1)
+		{
+			result = add(result,y);
+		}
+		x >>= 1; y <<= 1;
+	}
+	return result;
+}
+
 
 
 unsigned long long propRightmostOne(unsigned long long x)
@@ -92,6 +107,7 @@ int findLocationOfMSB(long long x)
 
 
 // this is quite slow as we use  addition in finding the location
+// and the loop. We can improve on this
 long long reverseBits_v1(long long x)
 {
 	// we need to find the location of most significant bit
@@ -101,12 +117,36 @@ long long reverseBits_v1(long long x)
 	return x;
 }
 
+const int kNumUnsignBits = 64;
+// this is crap as it is O(n), can we improve?
+unsigned long closestIntSameBitCount(unsigned long x)
+{
+	for(int i = 0; i < kNumUnsignBits - 1; ++i)
+	{
+		// we only want to swap bits when they are different
+		if(((x >> i) & 1) != (x >> (i + 1)) & 1)
+		{
+			unsigned long long mask = (1L << i) | (1L << (i + 1));
+			x ^= mask; // XOR does the job
+			return x;
+		}
+	}
+	throw std::invalid_argument("all bits are 1 or 0");
+}
+
+
+
 
 int main()
 {
+
+	
 	long long x = 101;
-	std::cout << std::bitset<8>(x).to_string() << std::endl;
-	x = reverseBits_v1(x); 
-	std::cout << std::bitset<8>(x).to_string() << std::endl;
+    std::cout << std::bitset<8>(x).to_string() << std::endl;
+	
+	std::cout << std::bitset<8>(closestIntSameBitCount(x)).to_string() << std::endl;
+	
+	                                  
+	
 	return 0;
 }
