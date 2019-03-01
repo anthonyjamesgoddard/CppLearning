@@ -134,18 +134,26 @@ unsigned long closestIntSameBitCount(unsigned long x)
 	throw std::invalid_argument("all bits are 1 or 0");
 }
 
-
-
+// ! BETTER ! does the same thing in O(1) 
+unsigned long closestIntSameBitCountImproved(unsigned long x)
+{
+	auto y = x ^ (x >> 1);
+	y &= -y;
+	x ^= y;
+	x^= y<<1;
+	return x;
+}
 
 int main()
 {
 
 	
-	long long x = 101;
+	long long x = 340;
     std::cout << std::bitset<8>(x).to_string() << std::endl;
 	
-	std::cout << std::bitset<8>(closestIntSameBitCount(x)).to_string() << std::endl;
-	
+	//std::cout << std::bitset<8>(closestIntSameBitCount(x)).to_string() << std::endl;
+	std::cout << std::bitset<8>(closestIntSameBitCountImproved(x)).to_string() << std::endl;
+
 	                                  
 	
 	return 0;

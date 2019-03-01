@@ -2,6 +2,8 @@
 #include<vector>
 #include<iterator>
 
+
+// puts the even numbers at the beginning of the array, odd numbers at the end
 void evenOdd(std::vector<int>* A_ptr)
 {
     std::vector<int> A  = *A_ptr;
