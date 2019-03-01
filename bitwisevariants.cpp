@@ -148,7 +148,7 @@ int main()
 {
 
 	
-	long long x = 340;
+	long long x = 100;
     std::cout << std::bitset<8>(x).to_string() << std::endl;
 	
 	//std::cout << std::bitset<8>(closestIntSameBitCount(x)).to_string() << std::endl;
