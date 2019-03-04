@@ -46,7 +46,38 @@ unsigned long long multiply(unsigned long long x,
 	return result;
 }
 
+unsigned divide(unsigned x, unsigned y)
+{
+	unsigned result = 0;
+	int power = 32; // unsigned (int) is 32 bits
+	unsigned long long y_power = static_cast<unsigned long long>(y) << power;
+	while(x >= y) // while we can subtract integer multiples of y from x
+	{
+		while(y_power > x) // we seek the largest k s.t. 2^k*y < x
+		{
+			y_power >>= 1;
+			--power;
+		}
+		result += 1U << power; // adding 2^k to the quotient
+		x -= y_power;          // subtract it from x;
+	}
+	return result;
+}
 
+double Power(double x, int y)
+{
+	double result = 1;
+	int power = y;
+	while(power)
+	{
+		if(power & 1) // if we encounter a 1 in the binary rep
+		{
+			result *= x; // use math. prop. of exponentiation. :)
+		}
+		x *= x; power >>= 1; // keep track of the power of two's
+	}
+	return result;
+}
 
 unsigned long long propRightmostOne(unsigned long long x)
 {
@@ -154,7 +185,7 @@ int main()
 	//std::cout << std::bitset<8>(closestIntSameBitCount(x)).to_string() << std::endl;
 	std::cout << std::bitset<8>(closestIntSameBitCountImproved(x)).to_string() << std::endl;
 
-	                                  
-	
+	std::cout <<  divide(100,3) << std::endl;                                 
+	std::cout << Power(4,3) << std::endl;
 	return 0;
 }
