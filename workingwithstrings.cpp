@@ -52,7 +52,7 @@ int stringToInt(const std::string& s)
 
 std::string convertBase(const std::string& NumAsString, int b1, int b2)
 {
-	bool is_negative = NumAsString
+	bool is_negative = NumAsString.front() == '-';
 	
 }
 

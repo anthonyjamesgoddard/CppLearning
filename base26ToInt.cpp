@@ -41,9 +41,21 @@ int SSDecodeColID(const std::string& col)
 	way makes sense. :S.
 */
 // 2. converting an integer back to SSCID
+std::string intToSSCID(int input)
+{
+	std::string result;
+	while(input)
+	{
+		int ch = input % 26 + 'A' - 1;
+		input /= 26;
+		result.push_back(ch);
+	}
+	return {result.rbegin(), result.rend()};
+}
 
 int main()
 {
-	std::string s = "AZ";
+	std::string s = "ABCDER";
 	std::cout << b26ToInt(s) << std::endl;
+	std::cout << intToSSCID(12850908) << std::endl;
 }
