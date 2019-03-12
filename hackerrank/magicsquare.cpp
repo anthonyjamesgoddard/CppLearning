@@ -15,6 +15,8 @@ int difference(std::vector<std::vector<int>>& s, std::vector<std::vector<int>>& 
 
 int main()
 {
+	// we input this wrong the first time so some tests were failing
+	// found some alt solution where the guy types them in correct :)
     std::vector<std::vector<std::vector<int>>> magics = {
         {{8,1,6},{3,5,7},{4,9,2}},
         {{4,3,8},{9,5,1},{2,7,6}},
