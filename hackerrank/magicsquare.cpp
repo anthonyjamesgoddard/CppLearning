@@ -17,6 +17,7 @@ int main()
 {
 	// we input this wrong the first time so some tests were failing
 	// found some alt solution where the guy types them in correct :)
+	
     std::vector<std::vector<std::vector<int>>> magics = {
         {{8,1,6},{3,5,7},{4,9,2}},
         {{4,3,8},{9,5,1},{2,7,6}},
@@ -26,7 +27,6 @@ int main()
         {{8,3,4},{1,5,9},{6,7,2}},
         {{4,9,2},{3,5,7},{8,1,6}},
         {{2,7,6},{9,5,1},{4,3,8}}};
-    std::vector<std::vector<int>> magic = {{2,7,6},{9,5,1},{4,3,8}};
 
     std::vector<std::vector<int>> input = {{4,5,8},{2,4,1},{1,9,7}};
 
