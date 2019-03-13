@@ -13,7 +13,7 @@ int pickingNumbers(vector<int> a) {
             chosen = v;
         }
     }
+    counters.push_back(counter); // just incase all elements are the same
     return *max_element(counters.begin(),counters.end());
 }
 
-// failing test wherer ther are 100 elements with same value
