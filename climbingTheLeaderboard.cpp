@@ -1,41 +1,34 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
+vector <int> climbingLeaderboard(vector <int> scores, vector <int> alice) {
+    vector<int> result;
+    reverse(alice.begin(), alice.end());
+    int lastIndex = 0;
+    int lastRank = 1;
 
-vector<int> climbingLeaderboard(vector<int> scores, vector<int> alice) {
-	int sz = scores.size() - 1;
-	int highScore = -10;
-	int position = 1;
-	vector<int> leaderBoard;
-	for (auto&v : alice){
-		while (sz >= 0 && scores[sz] <= v){
-			if (scores[sz] > highScore){
-				position++;
-				highScore = scores[sz];
-			}
-			sz--;
-		}
-		leaderBoard.push_back(position);
-	}
-	highScore = leaderBoard.back();
-	for (auto&v : leaderBoard)
-		v = highScore + 1 - v;
-	return leaderBoard;
-}
+    for (int i = 0; i < alice.size(); i++) {
 
-// still fails other tests
+        int rank = lastRank;
+        for (int j = lastIndex; j < scores.size(); j++) {
+            if (alice[i] >= scores[j]) {
+                lastIndex = j;
+                break;
+            }
 
-int main()
-{
-	vector<int> scores = { 100, 90, 90, 80, 75, 60 };
-	vector<int> alice = { 50, 65, 77, 90, 102 };
-	auto result = climbingLeaderboard(scores, alice);
+            else if (alice[i] < scores[j]) {
+                rank++;
+            }
 
-	scores = { 100,100,50,40,40,20,10 }; 
-	alice = { 5,25,50,120 };
-	result = climbingLeaderboard(scores, alice);
-	std::cout << "finished" << std::endl;
+            if (scores[j] == scores[j+1] && rank != 1) {
+                rank--;
+            }
+        }
+        result.push_back(rank);   
+        lastRank = rank;
+    }
+    reverse(result.begin(), result.end());
+
+    return result;
 }
