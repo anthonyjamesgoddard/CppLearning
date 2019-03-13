@@ -12,6 +12,7 @@ vector <int> climbingLeaderboard(vector <int> scores, vector <int> alice) {
 		}
 	}
 	h_rank++;
+	
 	vector<int>ranks(alice.size());
 	int j = scores.size() - 1;
 	for (int i = 0; i<alice.size(); i++){
@@ -34,5 +35,10 @@ vector <int> climbingLeaderboard(vector <int> scores, vector <int> alice) {
 
 int main()
 {
+	vector<int> alice = {1,3,5,6,8,23};
+	vector<int> scores = {100,100,34,5,3,3,3,3,2,1};
+	auto result = climbingLeaderboard(scores,alice);
 
+	for(auto& v: result)
+		std::cout << v << std::endl;
 }
