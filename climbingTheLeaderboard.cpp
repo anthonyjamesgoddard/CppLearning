@@ -1,34 +1,31 @@
-#include <bits/stdc++.h>
-
-using namespace std;
+// so my original code was not far from this solution.
+// this one fails no tests!
 
 vector <int> climbingLeaderboard(vector <int> scores, vector <int> alice) {
-    vector<int> result;
-    reverse(alice.begin(), alice.end());
-    int lastIndex = 0;
-    int lastRank = 1;
-
-    for (int i = 0; i < alice.size(); i++) {
-
-        int rank = lastRank;
-        for (int j = lastIndex; j < scores.size(); j++) {
-            if (alice[i] >= scores[j]) {
-                lastIndex = j;
+    // Complete this function
+    int h_rank = 1;
+    for(int i=scores.size()-1;i>0;i--){
+        if(scores[i]<scores[i-1]){
+            h_rank++;
+        }
+    }
+    h_rank++;
+    vector<int>ranks(alice.size());
+    int j = scores.size()-1;
+    for(int i=0;i<alice.size();i++){
+        while(alice[i]>=scores[j] ){
+            if(h_rank==1){
                 break;
             }
-
-            else if (alice[i] < scores[j]) {
-                rank++;
+            if(scores[j]==scores[j-1]){
+                j--;
             }
-
-            if (scores[j] == scores[j+1] && rank != 1) {
-                rank--;
+            else{
+                j--;
+                h_rank--;
             }
         }
-        result.push_back(rank);   
-        lastRank = rank;
+        ranks[i] = h_rank;
     }
-    reverse(result.begin(), result.end());
-
-    return result;
+    return ranks;
 }
