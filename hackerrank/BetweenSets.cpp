@@ -25,10 +25,12 @@ int leastCommonMultiple()
 int main()
 {
 	/*
-		1. Find the LCM of A, LCM_A. Any other multiple of A is a multiple of LCM_A.
-		2. Find the GCD of B, GCD_B. All other common divisors of B are less than GCD_B.
-		3. Find how many divisors are in GCD_B/LCM_A
+		1. Find the LCM of A, L. Hence our candidates must be a multiple of L 
+		2. Find the GCD of B, G. Hence our condidates must divide G
+		3. Find how many divisors are in G/L
 
-		why does this work?
+		Note that for some candidate n, L|n|G --> n/L | G/L. If we can find how many divisors G/L has then 
+		then we know how many candidates n there are that are between both sets. The outline is just provided
+		as this requires some boilerplate cading to get going.
 	*/
 }
