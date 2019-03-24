@@ -1,5 +1,10 @@
 // Solution to Queens Attack II from HackerRank. 
 // The time complexity of this solution is O(numberOfObsticles)
+// FAILS LOTS OF TESTS.
+
+// the failures are to do with more than one obsticle lying on a cirtain path
+// to get around this we need to consider a nice way of removing duplicates on a path
+
 
 #include<iostream>
 #include<vector>
