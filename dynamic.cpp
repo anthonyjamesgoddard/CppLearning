@@ -175,8 +175,6 @@ int ComputeMaxScore(int x,int y,
 }
 
 // the famous knapsack problem
-
-
 struct Item;
 int OptimumSubjectToItemAndCapacity(const vector<Item>&, int, int,
                                     vector<vector<int>>*);
@@ -207,14 +205,15 @@ int OptimumSubjectToItemAndCapacity(const vector<Item>& items, int k,
     // a capacity of j.
     vector<vector<int>>& V = *V_ptr;
     if (V[k][available_capacity] == -1) {
-        int without_curr_item = OptimumSubjectToItemAndCapacity(
-                                                                items, k - 1, available_capacity, V_ptr);
-        int with_curr_item =
-        available_capacity < items[k].weight
-        ? 0
-        : items[k].value + OptimumSubjectToItemAndCapacity(
+        int without_curr_item = OptimumSubjectToItemAndCapacity(items, k - 1, available_capacity, V_ptr);
+        int with_curr_item;
+        if(available_capacity < items[k].weight) {
+            with_curr_item = 0;
+        } else {
+            with_curr_item = items[k].value + OptimumSubjectToItemAndCapacity(
                                                            items, k - 1,
                                                            available_capacity - items[k].weight, V_ptr);
+        }
         V[k][available_capacity] = std::max(without_curr_item, with_curr_item);
     }
     return V[k][available_capacity];
@@ -235,4 +234,3 @@ int main(int argc, char* argv[]) {
     
     
 }
-
