@@ -206,10 +206,8 @@ int OptimumSubjectToItemAndCapacity(const vector<Item>& items, int k,
     vector<vector<int>>& V = *V_ptr;
     if (V[k][available_capacity] == -1) {
         int without_curr_item = OptimumSubjectToItemAndCapacity(items, k - 1, available_capacity, V_ptr);
-        int with_curr_item;
-        if(available_capacity < items[k].weight) {
-            with_curr_item = 0;
-        } else {
+        int with_curr_item = 0;
+        if(items[k].weight < available_capacity) {
             with_curr_item = items[k].value + OptimumSubjectToItemAndCapacity(
                                                            items, k - 1,
                                                            available_capacity - items[k].weight, V_ptr);
@@ -217,6 +215,31 @@ int OptimumSubjectToItemAndCapacity(const vector<Item>& items, int k,
         V[k][available_capacity] = std::max(without_curr_item, with_curr_item);
     }
     return V[k][available_capacity];
+}
+
+
+
+
+int MinimumPathWeight(const vector<vector<int>>& triangle) {
+    if (triangle.empty()) {
+        return 0;
+    }
+    // Store the previous row's minimum weight paths
+    // passing through each of those entries.
+    vector<int> prev_row(triangle.front());
+    for (int i = 1; i < triangle.size(); ++i) {
+        vector<int> curr_row(triangle[i]);
+        // first entry
+        curr_row.front() += prev_row.front();
+        // intermediate entries
+        for (int j = 1; j < curr_row.size() - 1; ++j) {
+            curr_row[j] += min(prev_row[j - 1], prev_row[j]);
+        }
+        // last entry
+        curr_row.back() += prev_row.back();
+        prev_row.swap(curr_row);
+    }
+    return *min_element(cbegin(prev_row), cend(prev_row));
 }
 
 
